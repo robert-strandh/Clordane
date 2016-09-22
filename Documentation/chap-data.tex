@@ -1,1 +1,26 @@
 \chapter{Examining and modifying data}
+
+When the application is stopped at some stopping point, \sysname{}
+provides a REPL for the user.  This REPL is not the ordinary REPL of
+the \commonlisp{} implementation, in that it operates in the lexical
+environment of the stopping point.  Also, the available functionality
+of the REPL may be restricted so as to preserve the integrity of the
+system.
+
+In particular, a references to a lexical variable is resolved to the
+place where the compiler allocated space for it, which might be in a
+register or on the stack.  The set of available such references may
+depend on the \texttt{debug} level when the code was compiled.  The
+application programmer may use \texttt{setq} to alter the value of
+lexical variables.  The value to be assigned is then restricted to the
+\emph{type} that the compiler inferred for this variable so that the
+code behaves in a consistent way after an assignment.  Implementations
+may of course choose to disable type inference so that any value is
+allowed, or they may disallow references to lexical variables for
+which they have no \sysname{} assignment support.
+
+In addition to providing a REPL, \sysname{} automatically displays all
+available lexical variables at the stopping point, allowing the
+application programmer to see which variables can be referred to.
+Each variable is shown with its name, its value (which may be clicked
+on for inspection), and its type.
