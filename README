@@ -1,1 +1,19 @@
-Clordane is a debugger for Common Lisp.
+Clordane is a project for which no code exists yet.
+
+The purpose of the project is to specify, and ultimately create, a
+debugger for Common Lisp.
+
+We believe that the current situation when it comes to development and
+debugging tools for free Common Lisp systems can be improved.
+Clordane is meant to be part of such improvements.
+
+Implementing Clordane will require substantial implementation-specific
+work.  For that, we also need to specify protocols that allow Clordane
+to communicate with the implementations.  However, initially, we
+concentrate our efforts on the user interface and what can be done
+with it.
+
+While the main purpose of Clordane is to serve as a debugger for the
+application programmer, we also include ideas for how it can serve as
+a debugging tool for the system programmer, i.e., the programmer
+working on implementing or maintaining a Common Lisp system.
