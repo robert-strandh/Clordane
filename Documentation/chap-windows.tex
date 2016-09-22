@@ -1,0 +1,40 @@
+\chapter{Different types of windows}
+
+\section{Source window}
+
+A source window is a window that displays source code together with
+\pollpoints{}.  A \pollpoint{} which is not a \breakpoint{} is shown
+as a cursor with blue color.  A \pollpoint{} which is also a
+\breakpoint{} is shown as a cursor with red color.
+
+\section{\Stoppingpoint{} window}
+
+A \stoppingpoint{} window is a window that is popped up whenever 
+the \applicationthread{} is stopped.
+
+The \stoppingpoint{} window shows the position of the \stoppingpoint{}
+and variables that are \emph{live} at the \stoppingpoint{}.  The value
+of a live variable can be obtained by hovering the pointer over the
+variable.
+
+In the \stoppingpoint{} window is also shown \pollpoints{} in the
+source code to which the user can ask the program to \emph{\dvance{}}.
+Clicking with the left mouse button on such a point will set a
+temporary \stoppingpoint{} at that position and then the program will
+continue from the \stoppingpoint{}.  The temporary \stoppingpoint{} is
+removed as soon as it is reached.
+
+In this window, there are button that the user can click on.  One such
+button is marked \emph{Finish} and results in the program continuing
+from the \stoppingpoint{} to immediately after the next \emph{return}.
+
+Another button is marked \emph{Enter}.  This button is clickable only
+if the \stoppingpoint{} immediately precedes a function call or a tail
+call.  Clicking this button sets a temporary \stoppingpoint{} at the
+start of the function about to be called and then the program
+execution continues from the \stoppingpoint{}.
+
+\section{Stack backtrace window}
+
+Whenever the program is stopped, the \emph{stack backtrace window} is
+updated.

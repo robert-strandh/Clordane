@@ -1,0 +1,22 @@
+\chapter{Breakpoints}
+
+\section{Creating or destroying a breakpoint}
+
+When the mouse is in a source window, \pollpoint{} are shown as blue
+cursors.  A \breakpoint{} set are shown as red cursors.
+
+Clicking with the left mouse button on a blue cursor will create a
+\breakpoint{} at that \pollpoint{}, and the cursor will change color
+to red.
+
+Clicking with the left mouse button on a red cursor will pop up a menu
+with several choices concerning that \breakpoint{}:
+
+\begin{itemize}
+\item Destroy the breakpoint.
+\item Add a form.  This choice will open an code input window
+  allowing the user to type a form.  Each time the program control
+  reaches a \breakpoint{}, the form is evaluated.
+\item Remove the form.
+\item Etc.
+\end{itemize}

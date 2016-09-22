@@ -1,0 +1,132 @@
+\chapter{Introduction}
+\pagenumbering{arabic}%
+
+\sysname{} is a debugger for \commonlisp{}.
+
+\section{Terminology}
+
+%
+\def\Applicationthread{Application thread}%
+\def\applicationthread{application thread}%
+\def\applicationthreads{application threads}%
+\subsection{\Applicationthread{}}
+
+From the point of view of \sysname{}, the \applicationthread{} is the
+thread that the programmer wants to debug.  Other threads running the
+same code as the \applicationthread{} are not affected by the
+debugging actions taken by the programmer.
+
+The \applicationthread{} can run any code, including that of
+\sysname{}.
+
+%
+\def\Debuggerthread{Debugger thread}%
+\def\debuggerthread{debugger thread}%
+\def\debuggerthreads{debugger threads}%
+\subsection{\Debuggerthread{}}
+
+The \debuggerthread{} is the thread running \sysname{}.  The
+\debuggerthread{} can not debug itself, but it can debug the same code
+running in a different thread.
+
+%
+\def\Pollpoint{Poll point}%
+\def\pollpoint{poll point}%
+\def\pollpoints{poll points}%
+\subsection{\Pollpoint{}}
+
+A \emph{\pollpoint{}} is a place in the program where a running thread
+can be \emph{stopped}.
+
+From the point of view of the compiler, a \pollpoint{} is a place
+where code is inserted so that the program interrogates its
+\emph{thread} to see whether it should take some action, such as
+generating trace output, stopping the execution, or some other
+action.  
+
+The compiler generates \pollpoints{} only where it is \emph{safe} to
+stop the program.
+
+Compiling code with a higher \texttt{debug} value gives executable
+code with more \pollpoints{}.
+
+%
+\def\Breakpoint{Break point}%
+\def\breakpoint{break point}%
+\def\breakpoints{break points}%
+\subsection{\Breakpoint{}}
+
+A \emph{\breakpoint{}} is a \pollpoint{} that has been marked to indicate
+that the running program should stop its execution when it is
+reached.
+
+Such \breakpoints{} can be \emph{created} or \emph{destroyed} for a
+thread by \sysname{} independently of whether the thread is currently
+executing or currently stopped.
+
+A \breakpoint{} can be \emph{steady} or \emph{volatile}.  A
+\emph{steady} \breakpoint{} is destroyed only as a result of an action
+on the part of the programmer.  A \emph{volatile} \breakpoint{} is
+also destroyed when the program control reaches is.
+
+A \breakpoint{} can be associated with a \commonlisp{} \emph{form} to
+be evaluated when the \breakpoint{} is reached.  The form is evaluated
+by \sysname{}.  Tracing can be accomplished by associating with the
+\breakpoint{} a form that will print some information and then
+\emph{continue} the execution of the thread.
+
+%
+\def\Stoppingpoint{Stopping point}%
+\def\stoppingpoint{stopping point}%
+\def\stoppingpoints{stopping points}%
+\subsection{\Stoppingpoint{}}
+
+A \emph{\stoppingpoint{}} is a place in the program where the thread
+of execution is currently stopped.  A \stoppingpoint{} can be any
+program counter value, but a value of the program counter other than
+a \pollpoint{} can not be reached by creating a \breakpoint{}.  It
+can, however, be reached by \emph{stepping by instruction} after the
+program has stopped at a \pollpoint{}.
+
+%
+\def\Continue{Continue}%
+\def\continue{continue}%
+\def\continues{continues}%
+\subsection{\Continue{}}
+
+One action the programmer can take when the \applicationthread{} is
+stopped is to instruct \sysname{} to \emph{\continue{}} the execution
+of the \applicationthread{}.  The execution of the
+\applicationthread{} will then resume until it either terminates or
+reaches a \breakpoint{}.
+
+%
+\def\Dvance{Advance}%
+\def\dvance{advance}%
+\def\dvances{advances}%
+\subsection{\Dvance{}}
+
+When the \applicationthread{} is stopped, the application programmer
+can instruct \sysname{} to \emph{\dvance{}} to a particular
+\pollpoint{}.  \sysname{} will then insert a \emph{volatile
+  \breakpoint{}} at that point and then \continue{} the execution of
+the \applicationthread{}.
+
+%
+\def\Step{Step}%
+\def\step{step}%
+\def\steps{steps}%
+\subsection{\Step{}}
+
+The application programmer can instruct \sysname{} to \emph{\step{}}
+the execution of the \applicationthread{}, either by \emph{\pollpoint}
+or by \emph{instruction}.  
+
+When \sysname{} is instructed to \step{} by \pollpoint{}, it will
+continue the execution of the application thread until the next
+\pollpoint{} is reached, at which point \sysname{} will \emph{stop}
+the \applicationthread{}, without setting any \breakpoint{}. 
+
+When \sysname{} is instructed to \step{} by instruction, it will
+execute the next machine instruction and then stop the execution of
+the \applicationthread{}.
