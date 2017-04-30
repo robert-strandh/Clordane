@@ -1,2 +1,17 @@
 \chapter{Backtrace}
 
+When an unhandled error is signaled in the application thread, the
+execution of that thread is stopped, and \sysname{} displays a
+\emph{backtrace}.  By default, the backtrace shows only function calls
+that are part of the application itself, and not part of the internal
+workings of the \commonlisp{} system.  A button can be clicked on to
+toggle this setting so that all stack frames are shown.
+
+Clicking on one of the stack frames makes this stack frame the
+\emph{current} one.  The \sysname{} REPL can then be used to evaluate
+forms in the lexical environment of that stack frame, and the
+\texttt{*package*} special variable is set to the package in which the
+code of the current stack frame has been defined.  The
+\emph{\stoppingpoint{} window} discussed in
+\refSec{sec-windows-stopping-point} shows the point in the code where
+the error was signaled.
