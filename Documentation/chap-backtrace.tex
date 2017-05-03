@@ -9,10 +9,17 @@ workings of the \commonlisp{} system.  A button can be clicked on to
 toggle this setting so that all stack frames are shown.
 
 Clicking on one of the stack frames makes this stack frame the
-\emph{current} one.  The \sysname{} REPL can then be used to evaluate
-forms in the lexical environment of that stack frame, and the
+\emph{current} one.  A different stack frame can also be selected by
+navigating with the keystrokes \texttt{p} (for \emph{previous}) and
+\texttt{n} (for \emph{next}).  The \sysname{} REPL can then be used to
+evaluate forms in the lexical environment of that stack frame, and the
 \texttt{*package*} special variable is set to the package in which the
-code of the current stack frame has been defined.  The
-\emph{\stoppingpoint{} window} discussed in
+code of the current stack frame has been defined.
+
+Initially, the \emph{stoppingpoint{} window} discussed in
 \refSec{sec-windows-stopping-point} shows the point in the code where
-the error was signaled.
+the error was signaled.  When the user selects some stack frame, the
+stoppingpoint{} window shows the code around the point where execution
+will resume if control is returned to that stack frame.  As before,
+the value of live variables can be obtained by hovering the pointer
+over a variable.
