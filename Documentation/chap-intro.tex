@@ -1,7 +1,26 @@
 \chapter{Introduction}
 \pagenumbering{arabic}%
 
-\sysname{} is a debugger for \commonlisp{}.
+\section{Purpose}
+
+\sysname{} is a debugger for \commonlisp{}.  The \commonlisp{}
+standard has an entry for the word ``debugger'' in the glossary, but
+there are no requirements on the capabilities of a debugger there,
+other than that it should allow the user to handle conditions
+interactively.  Most existing implementations provide more
+functionality, such as the ability to examine active stack frames
+including the values of live variables and the source location of the
+return address of a particular stack frame.
+
+In this document, we define a debugger with many more features than
+what is typically provided.  In particular, we take advantage of the
+existence of \emph{threads} in most modern \commonlisp{}
+implementations to define improvements to the operations provided by
+the debugger.
+
+The downside of these additional features is that \sysname{} will
+require much more assistance from the supported implementations than
+required by existing debuggers.
 
 \section{Terminology}
 
