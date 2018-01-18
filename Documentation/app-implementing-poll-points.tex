@@ -1,0 +1,75 @@
+\chapter{Implementing poll points}
+\label{app-implementing-poll-points}
+
+There are many ways of implementing poll points.  However, we consider
+that a reasonable implementation must have the following
+characteristics:
+
+\begin{itemize}
+\item There should be little or no performance penalty for code that
+  is running in some thread other than a thread being debugged.
+\item There should be little performance penalty for poll points that
+  are not currently breakpoints.
+\end{itemize}
+
+We suggest the following technique which will work for any processor
+architecture:
+
+\begin{itemize}
+\item The thread instance contains three pieces of information
+  associated with poll points:
+  \begin{enumerate}
+  \item A \emph{debug flag} which is a single bit indicating whether
+    the thread is running under the control of the debugger.  At the
+    beginning of each top-level function compiled with a high value of
+    the \texttt{debug} quality, this flag is loaded into a lexical
+    variable, subject to register allocation as usual.
+  \item A \emph{breakpoint table} (perhaps a hash table) indexed by values of
+    the program counter, and containing information about the nature
+    of a breakpoint at this program point.
+  \item A small \emph{bit table}, say 1024 bits or so.  The index into
+    this table is the value of the program counter modulo its size.
+    It contains summary information from the previous table, i.e.,
+    whenever some value of the program counter is present in the
+    breakpoint table, then the corresponding bit is set in this bit
+    table.
+  \end{enumerate}
+\item When code is compiled with a high value of the \texttt{debug}
+  quality, a small, local routine is added to each top-level
+  function.  This routine is called using an inexpensive call
+  protocol, typically just a \texttt{jsr} instruction.  The routine
+  performs the following actions:
+  \begin{itemize}
+  \item It starts by checking the debug flag that was loaded into a
+    lexical variable from the thread instance of the running thread.
+    If that flag is cleared, then the routine returns without any
+    action.
+  \item If the flag is set, then it uses the value of the program
+    counter stored on the stack as part of the call protocol.  It
+    takes that value modulo the size of the bit table and checks
+    whether the entry in the bit table is set.  If it is cleared,
+    again, the routine returns without any action.
+  \item If the bit-table entry is set, then it consults the breakpoint
+    table to see whether the actual value of the program counter is
+    present there.  If not, the routine again returns normally.  If it
+    is present, then it suspends the execution of the thread and hands
+    over control to the debugger thread.
+  \end{itemize}
+\item Also when code is compiled with a high value of the
+  \texttt{debug} quality, a call to the small routine is inserted
+  before the beginning, and after the end of the execution of every
+  source-level form present in the code.
+\end{itemize}
+
+The debugger maintains the breakpoint table and the bit table as
+follows:
+
+\begin{itemize}
+\item When a breakpoint is set, it is added to the breakpoint table,
+  and bit in the bit table corresponding to the value of the program
+  counter modulo the size of the bit table is set.
+\item When a breakpoint is removed, the entire bit table is first
+  cleared.  Then the breakpoint table is traversed and, for each
+  breakpoint, the corresponding bit in the bit table is set as
+  before.
+\end{itemize}
