@@ -60,8 +60,9 @@ can be \emph{stopped}.
 From the point of view of the compiler, a \pollpoint{} is a place
 where code is inserted so that the program interrogates its
 \emph{thread} to see whether it should take some action, such as
-generating trace output, stopping the execution, or some other
-action.  
+generating trace output, stopping the execution, or some other action.
+For a possible implementation of poll points, see
+\refApp{app-implementing-poll-points}.
 
 The compiler generates \pollpoints{} only where it is \emph{safe} to
 stop the program.
