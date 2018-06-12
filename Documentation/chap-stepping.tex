@@ -71,3 +71,27 @@ The action called \emph{step out} works as follows:
   beginning of $G$.
 \end{itemize}
 
+When a form $F$ is evaluated as a result of the \emph{step out}
+command, then if $F$ executes a non-local transfer of control such as
+a \texttt{return-from}, a \texttt{go}, or a \texttt{throw}, then
+execution may or may not stop at the next stopping point.  Execution
+will stop only of some stopping point is encountered.
+
+\section{Step call}
+
+The action called \emph{step call} works as follows:
+
+\begin{itemize}
+\item If the current stopping point is at the beginning of a form $F$
+  that is \emph{not} a function-call, then this command has no effect.
+\item If the current stopping point is at the beginning
+  of a form $F$ that \emph{is} a function-call, then the next stopping
+  point is at the beginning of the first form to be evaluated in the
+  called function.
+\end{itemize}
+
+When a form $F$ is evaluated as a result of the \emph{step call}
+command, then if $F$ executes a non-local transfer of control such as
+a \texttt{return-from}, a \texttt{go}, or a \texttt{throw}, then
+execution may or may not stop at the next stopping point.  Execution
+will stop only of some stopping point is encountered.
