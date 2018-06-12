@@ -31,15 +31,21 @@ The action called \emph{step over} works as follows:
 The action called \emph{step in} works as follows:
 
 \begin{itemize}
+\item If the current stopping point is at the end of the last sub-form
+  $F$ of its immediately enclosing form $G$, and $G$ is \emph{not} a
+  function call, then the \emph{step in} command has no effect, so the
+  stopping point remains the same.
+\item If the current stopping point is at the end of the last sub-form
+  $F$ of its immediately enclosing form $G$, and $G$ \emph{is} a
+  function call, then the next stopping point is at the beginning of
+  the first form to be evaluated in the function being called.
 \item If the current stopping point is at the beginning of a form $F$
   to be evaluated, and $F$ has sub-forms that need evaluation, then
   the next stopping point is at the beginning of the first sub-form
   $G$ of $F$ that needs evaluation.
 \item If the current stopping point is at the beginning of a form $F$
   to be evaluated, and $F$ has no sub-forms that need evaluation, then
-  the next stopping point is at the end of $F$.
-\item If the current stopping point is at the end of a form $F$ to be
-  evaluated, then this action works the same way as \emph{step over}.
+  the next stopping point is at the end of the last sub-form of $F$.
 \end{itemize}
 
 \section{Step out}
