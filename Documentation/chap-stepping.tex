@@ -9,17 +9,21 @@ for the programmer to determine the unit of code to step by.
 The action called \emph{step over} works as follows:
 
 \begin{itemize}
+\item If the current stopping point is at the end of the last sub-form
+  of its immediately enclosing form, then the \emph{step over} command
+  has no effect, so the stopping point remains the same.
 \item If the current stopping point is at the beginning of a form $F$
-  to be evaluated, then the next stopping point is at the end of $F$.
-\item If the current stopping point is at the end of a form $F$ to be
-  evaluated, and there is only one possible next form $G$ to evaluate,
-  then $G$ is evaluated and the next stopping point is at
-  the end of $G$.
-\item If the current stopping point is at the end of a form $F$ to be
-  evaluated, and there are two possible next forms $G1$ and $G2$
-  depending on the value of $F$, then the next stopping point is ether
-  at the beginning of $G1$ or at the beginning of $G2$, according to
-  the value of $F$.
+  to be evaluated, and $F$ is the last sub-form of its immediately
+  enclosing form, then the next stopping point is at the end of $F$.
+\item If the current stopping point is at the beginning of a form $F$
+  to be evaluated, and there is only one possible next form $G$ to
+  evaluate, then $F$ is evaluated and the next stopping point is at
+  the beginning of $G$.
+\item If the current stopping point is at the beginning of a form $F$
+  to be evaluated, and there are two possible next forms $G1$ and $G2$
+  depending on the value of $F$, then $F$ is evaluated and the next
+  stopping point is ether at the beginning of $G1$ or at the beginning
+  of $G2$, according to the value of $F$.
 \end{itemize}
 
 \section{Step in}
