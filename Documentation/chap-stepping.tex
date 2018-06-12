@@ -59,6 +59,15 @@ The action called \emph{step in} works as follows:
 The action called \emph{step out} works as follows:
 
 \begin{itemize}
-\item 
+\item If the current stopping point is at the beginning or at the end
+  of a form $F$ whose immediately enclosing form is a function
+  definition, then the next stopping point is the same as if a
+  \emph{step over} command had been executed at the beginning of the
+  corresponding function-call form in the caller.
+\item If the current stopping point is at the beginning or at the end
+  of a form $F$ whose immediately enclosing form is $G$ that is
+  \emph{not} a function definition, then the next stopping point is
+  the same as if a \emph{step over} command had been executed at the
+  beginning of $G$.
 \end{itemize}
 
