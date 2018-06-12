@@ -26,6 +26,12 @@ The action called \emph{step over} works as follows:
   of $G2$, according to the value of $F$.
 \end{itemize}
 
+When a form $F$ is evaluated as a result of the \emph{step over} command,
+then if $F$ executes a non-local transfer of control such as a
+\texttt{return-from}, a \texttt{go}, or a \texttt{throw}, then
+execution may or may not stop at the next stopping point.  Execution
+will stop only of some stopping point is encountered.
+
 \section{Step in}
 
 The action called \emph{step in} works as follows:
@@ -51,5 +57,8 @@ The action called \emph{step in} works as follows:
 \section{Step out}
 
 The action called \emph{step out} works as follows:
-[to be filled in]
+
+\begin{itemize}
+\item 
+\end{itemize}
 
