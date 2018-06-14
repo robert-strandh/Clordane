@@ -143,14 +143,14 @@ the execution of the \applicationthread{}, either by \emph{\pollpoint}
 or by \emph{instruction}.  
 
 Stepping by \pollpoint{} comes in three variants, namely \emph{\step{}
-  in}, \emph{\step{} out}, and \emph{\step{} over}.  The \emph{\step{}
-  in} command steps to the next \pollpoint{} \emph{inside} the next form
-to be evaluated.  The \emph{\step{} out} command finishes the
-execution of the current form and stops at the end of that form.  The
-\emph{\step{} over} command evaluates the next form and then stops at
-the end if it, except when there is more than one possible next form
-(as a result of a condition) when it stops at the \emph{beginning} of
-the next form.
+  in}, \emph{\step{} out}, \emph{\step{} over}, and \emph{\step{}
+  call}.  The \emph{\step{} in} command steps to the next \pollpoint{}
+\emph{inside} the next form to be evaluated.  The \emph{\step{} out}
+command finishes the execution of the current form and stops at the
+end of that form.  The \emph{\step{} over} command evaluates the next
+form and then stops at the end if the next one.  The \emph{\step{}
+  call} command stops before the first form in a function about to be
+called.
 
 When \sysname{} is instructed to \step{} by \pollpoint{}, it inserts
 one or more \emph{volatile \breakpoints{}} at appropriate
