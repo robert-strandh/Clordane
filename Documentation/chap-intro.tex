@@ -86,8 +86,8 @@ executing or currently stopped.
 
 A \breakpoint{} can be \emph{steady} or \emph{volatile}.  A
 \emph{steady} \breakpoint{} is destroyed only as a result of an action
-on the part of the programmer.  A \emph{volatile} \breakpoint{} is
-also destroyed when the program control reaches is.
+on the part of the programmer.  All \emph{volatile} \breakpoints{} are
+destroyed when the program stops at any breakpoint.
 
 A \breakpoint{} can be associated with a \commonlisp{} \emph{form} to
 be evaluated when the \breakpoint{} is reached.  The form is evaluated
@@ -142,10 +142,22 @@ The application programmer can instruct \sysname{} to \emph{\step{}}
 the execution of the \applicationthread{}, either by \emph{\pollpoint}
 or by \emph{instruction}.  
 
-When \sysname{} is instructed to \step{} by \pollpoint{}, it will
-continue the execution of the application thread until the next
-\pollpoint{} is reached, at which point \sysname{} will \emph{stop}
-the \applicationthread{}, without setting any \breakpoint{}. 
+Stepping by \pollpoint{} comes in three variants, namely \emph{\step{}
+  in}, \emph{\step{} out}, \emph{\step{} over}, and \emph{\step{}
+  call}.  The \emph{\step{} in} command steps to the next \pollpoint{}
+\emph{inside} the next form to be evaluated.  The \emph{\step{} out}
+command finishes the execution of the current form and stops at the
+end of that form.  The \emph{\step{} over} command evaluates the next
+form and then stops at the end if the next one.  The \emph{\step{}
+  call} command stops before the first form in a function about to be
+called.
+
+When \sysname{} is instructed to \step{} by \pollpoint{}, it inserts
+one or more \emph{volatile \breakpoints{}} at appropriate
+\pollpoints{} in the program, and then continues executions until some
+\breakpoint{} is reached, at which point it will \emph{stop}
+the \applicationthread{} and destroy all volatile \breakpoints{}
+independently of the kind of \breakpoint{} that was reached.
 
 When \sysname{} is instructed to \step{} by instruction, it will
 execute the next machine instruction and then stop the execution of
