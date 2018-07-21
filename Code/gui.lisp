@@ -6,7 +6,7 @@
           (source :application :scroll-bars nil)
           (repl :application :scroll-bars nil)
           (interactor :interactor :scroll-bars nil))
-  (:layouts (default (clim:horizontally ()
+  (:layouts (default (clim:horizontally (:width 1200 :height 900)
                        (clim:vertically ()
                          (4/5 (clim:scrolling () backtrace))
                          (1/5 (clim:scrolling () interactor)))
