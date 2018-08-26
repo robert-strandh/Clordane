@@ -1,0 +1,26 @@
+(cl:in-package #:clordane)
+
+(clim:define-application-frame clordane ()
+  ()
+  (:panes (error-message :application :scroll-bars nil)
+          (backtrace :application :scroll-bars nil)
+          (interaction :interactor :scroll-bars nil)
+          (buttons  :application :scroll-bars nil)
+          (source :application :scroll-bars nil)
+          (repl  :application :scroll-bars nil))
+  (:layouts (default
+             (clim:horizontally ()
+               (1/2 (clim:vertically ()
+                      (1/10 error-message)
+                      (7/10 (clim:scrolling (:scroll-bars t) backtrace))
+                      (1/10 (clim:scrolling (:scroll-bars t) interaction))
+                      (1/10 buttons)))
+               (1/2 (clim:vertically ()
+                      (8/10 (clim:scrolling (:scroll-bars t) source))
+                      (2/10 (clim:scrolling (:scroll-bars t) repl))))))))
+
+(defun clordane ()
+  (clim:run-frame-top-level (clim:make-application-frame 'clordane)))
+
+(define-clordane-command (com-quit :name t) ()
+  (clim:frame-exit clim:*application-frame*))

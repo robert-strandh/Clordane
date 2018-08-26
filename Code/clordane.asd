@@ -4,6 +4,7 @@
   :depends-on (#:mcclim)
   :serial t
   :components
-  ((:file "packages")))
+  ((:file "packages")
+   (:file "gui")))
 
   
