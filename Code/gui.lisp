@@ -52,3 +52,6 @@
               (format *standard-input* "No source information available")
               (setf (source clim:*application-frame*)
                     (sicl-source-tracking:lines (caar positions))))))))
+
+(define-clordane-command (com-inspect-environment :name t) ()
+  (clouseau:inspector (environment clim:*application-frame*)))
