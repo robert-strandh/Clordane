@@ -7,5 +7,3 @@
   :components
   ((:file "packages")
    (:file "gui")))
-
-  

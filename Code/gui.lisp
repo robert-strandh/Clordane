@@ -27,7 +27,6 @@
         (format pane "No source available")
         (loop for line across source
               do (format pane "~a~%" line)))))
-
 (defun clordane ()
   (clim:run-frame-top-level (clim:make-application-frame 'clordane)))
 
