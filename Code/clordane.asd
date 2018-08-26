@@ -2,7 +2,8 @@
 
 (defsystem #:clordane
   :depends-on (#:mcclim
-               #:sicl-minimal-extrinsic-environment)
+               #:sicl-minimal-extrinsic-environment
+               #:clouseau)
   :serial t
   :components
   ((:file "packages")
