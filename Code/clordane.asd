@@ -4,9 +4,11 @@
   :depends-on (#:mcclim
                #:bordeaux-threads
                #:receptacle
-               #:sicl-source-tracking)
+               #:sicl-source-tracking
+               #:sicl-minimal-extrinsic-environment
+               #:clouseau)
   :serial t
   :components
   ((:file "packages")
+   (:file "communication")
    (:file "gui")))
-

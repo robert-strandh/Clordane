@@ -1,5 +1,5 @@
 (cl:in-package #:common-lisp-user)
 
 (defpackage #:clordane
-  (:use #:common-lisp)
+  (:use #:clim-lisp)
   (:export #:clordane))
