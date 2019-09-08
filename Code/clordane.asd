@@ -5,7 +5,7 @@
                #:bordeaux-threads
                #:receptacle
                #:sicl-source-tracking
-               #:sicl-minimal-extrinsic-environment
+               #:sicl-extrinsic-environment
                #:clouseau)
   :serial t
   :components
