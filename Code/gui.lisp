@@ -68,11 +68,8 @@
               (cons sicl-source-tracking:source-position
                     sicl-source-tracking:source-position))
   (when (boundp '*info*)
-    (let* ((expression
-             `(lambda ()
-                (setf (source ,(frame *info*)) ',source-position)))
-           (function (compile nil expression)))
-      (clim:execute-frame-command (frame *info*) `(funcall ,function)))))
+    (setf (source (frame *info*)) source-position)
+    (clim:execute-frame-command (frame *info*) '(com-nop))))
 
 (defun wait ()
   (when (boundp '*info*)
