@@ -1,42 +1,23 @@
 (defun bla ()
-  (format *trace-output* "1~%")
-  (clordane::wait)
-  (clordane::show (cons (make-instance 'sicl-source-tracking:source-position
-                          :lines #("first line" "second line" "third line")
-                          :line-index 1
-                          :character-index 3)
-                        (make-instance 'sicl-source-tracking:source-position
-                          :lines #("first line" "second line" "third line")
-                          :line-index 1
-                          :character-index 7)))
-  (format *trace-output* "2~%")
-  (clordane::wait)
-  (format *trace-output* "3~%")
-  (clordane::show (cons (make-instance 'sicl-source-tracking:source-position
-                          :lines #("another first line"
-                                   "another second line"
-                                   "another third line")
-                          :line-index 0
-                          :character-index 3)
-                        (make-instance 'sicl-source-tracking:source-position
-                          :lines #("another first line"
-                                   "another second line"
-                                   "another third line")
-                          :line-index 1
-                          :character-index 15)))
-  (format *trace-output* "4~%")
-  (clordane::wait)
-  (format *trace-output* "5~%")
-  (clordane::show (cons (make-instance 'sicl-source-tracking:source-position
-                          :lines #("one more first line"
-                                   "one more second line"
-                                   "one more third line")
-                          :line-index 1
-                          :character-index 3)
-                        (make-instance 'sicl-source-tracking:source-position
-                          :lines #("one more first line"
-                                   "one more second line"
-                                   "one more third line")
-                          :line-index 2
-                          :character-index 10)))
-  (format *trace-output* "6~%"))
+  (flet ((make-source (lines li1 ci1 li2 ci2)
+           (cons (make-instance 'sicl-source-tracking:source-position
+                   :lines lines :line-index li1 :character-index ci1)
+                 (make-instance 'sicl-source-tracking:source-position
+                   :lines lines :line-index li2 :character-index ci2)))
+         (action (n)
+           (format *trace-output* "~s~%" n)))
+    (action 1)
+    (clordane::wait)
+    (clordane::show
+     (make-source #("first line" "second line" "third line") 1 3 1 7))
+    (action 2)
+    (clordane::wait)
+    (action 3)
+    (clordane::show
+     (make-source #("xfirst line" "xsecond line" "xthird line") 0 2 1 10))
+    (action 4)
+    (clordane::wait)
+    (action 5)
+    (clordane::show
+     (make-source #("yfirst line" "ysecond line" "ythird line") 0 2 1 10))
+    (action 6)))
