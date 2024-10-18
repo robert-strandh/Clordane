@@ -3,13 +3,23 @@
 ;;; This is a mock-up application.  When there is a potential
 ;;; breakpoint, it calls CLORDANE:POTENTIAL-BREAKPOINT with the source
 ;;; information of that breakpoint.  It then waits by calling
-;;; CLORDANE:WAIT.  In a better version of Clordane and this protocol,
-;;; we imagine the use of a special variable, say CLORDANE:*FILTER*,
-;;; which contains a small-ish (maybe 1000 entries) bitvector.  The
-;;; application starts by consulting this bitvector with the address
-;;; of the instruction about to be executed, modulo the size.  If the
-;;; value is 0, there is definitely not a breakpoint there, so no need
-;;; to call POTENTIAL-BREAKPOINT or WAIT.
+;;; CLORDANE:WAIT.
+
+;;; In a native version of Clordane and this protocol, we imagine the
+;;; use of a special variable, say CLORDANE:*FILTER*, which contains a
+;;; small-ish (maybe 1000 entries) bitvector.  When a function has a
+;;; breakpoint set in it, the debugging version of the function body
+;;; is executed.  That body starts by accessing this special variable
+;;; and storing it in a lexical variable for faster lookup.  For each
+;;; potential breakpoint, the application starts by consulting this
+;;; bitvector (using the lexical variable) with the address of the
+;;; instruction about to be executed, modulo the size of the
+;;; bitvector.  If the value is 0, there is definitely not a
+;;; breakpoint there, so no need to call POTENTIAL-BREAKPOINT or WAIT.
+;;; This way, potential breakpoints that do not have a real breakpoint
+;;; will usually be fast.  If the application is run from a different
+;;; thread, then Clordane initializes CLORDANE:*FILTER* to have all
+;;; 0s.
 
 ;;; To execute the demo, make sure this file has been loaded, and then
 ;;; start Clordane with (CLORDANE:CLORDANE '(BLA)).  At a breakpoint,
