@@ -47,6 +47,12 @@
          (info (make-instance 'info
                  :queue (queue frame)
                  :frame frame))
+         ;; When a form is evaluated from Clordane, we make sure that
+         ;; the special variable *INFO* is bound to an instance of the
+         ;; class INFO.  That way, application code has access to the
+         ;; queue used for communication between it and Clordane, and
+         ;; to the Clordane application frame so that commands can be
+         ;; injected into it.
          (expression
            `(lambda () (let ((*info* ,info)) ,form)))
          (function (compile nil expression))
@@ -60,17 +66,27 @@
 (define-clordane-command (com-continue :name t) ()
   (receptacle:queue-push (queue clim:*application-frame*) t))
 
-(define-clordane-command (com-nop :name t) ()
+;;; This command is executed by the application injecting it into the
+;;; command queue of Clordane, using CLIM:EXECUTE-FRAME-COMMAND.
+(define-clordane-command (com-breakpoint :name t) ()
   nil)
 
+;;; This function is called by the application in the application
+;;; thread.  We simplify the demo by assuming that there is always a
+;;; breakpoint, because we don't yet have the mechanisms to manage
+;;; breakpoints.
 (defun potential-breakpoint (source-position)
   (check-type source-position
               (cons sicl-source-tracking:source-position
                     sicl-source-tracking:source-position))
+  ;; It is possible that the application is run directly, rather than
+  ;; from Clordane.  In that case, we do nothing.
   (when (boundp '*info*)
     (setf (source (frame *info*)) source-position)
-    (clim:execute-frame-command (frame *info*) '(com-nop))))
+    (clim:execute-frame-command (frame *info*) '(com-breakpoint))))
 
 (defun wait ()
+  ;; It is possible that the application is run directly, rather than
+  ;; from Clordane.  In that case, we do nothing.
   (when (boundp '*info*)
     (receptacle:queue-pop-wait (queue *info*))))
