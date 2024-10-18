@@ -9,16 +9,16 @@
          (action (n)
            (format *trace-output* "~s~%" n)))
     (action 1)
-    (clordane::wait)
+    (clordane:wait)
     (clordane:potential-breakpoint
      (make-source #("first line" "second line" "third line") 1 3 1 7))
     (action 2)
-    (clordane::wait)
+    (clordane:wait)
     (action 3)
     (clordane:potential-breakpoint
      (make-source #("xfirst line" "xsecond line" "xthird line") 0 2 1 10))
     (action 4)
-    (clordane::wait)
+    (clordane:wait)
     (action 5)
     (clordane:potential-breakpoint
      (make-source #("yfirst line" "ysecond line" "ythird line") 0 2 1 10))

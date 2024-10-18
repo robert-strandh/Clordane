@@ -3,4 +3,5 @@
 (defpackage #:clordane
   (:use #:clim-lisp)
   (:export #:clordane
-           #:potential-breakpoint))
+           #:potential-breakpoint
+           #:wait))
