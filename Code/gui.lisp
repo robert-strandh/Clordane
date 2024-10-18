@@ -18,32 +18,23 @@
 
 (defun display-source (frame pane)
   (unless (null (source frame))
-    (let* ((from (car (source frame)))
-           (to (cdr (source frame)))
-           (lines (sicl-source-tracking:lines from))
-           (from-line (sicl-source-tracking:line-index from))
-           (from-column (sicl-source-tracking:character-index from))
-           (to-line (sicl-source-tracking:line-index to))
-           (to-column (sicl-source-tracking:character-index to)))
-      (unless (null (source frame))
-        (loop for i from 0 below from-line
-              for line = (aref lines i)
-              do (format pane "~a~%" line))
-        (format pane "~a" (subseq (aref lines from-line) 0 from-column))
-        (clim:with-drawing-options (pane :ink clim:+red+)
-          (if (= from-line to-line)
-              (format pane "~a"
-                      (subseq (aref lines from-line) from-column to-column))
-              (progn (format pane "~a~%"
-                             (subseq (aref lines from-line) from-column))
-                     (loop for i from (1+ from-line) below to-line
-                           for line = (aref lines i)
-                           do (format pane "~a~%" line))
-                     (format pane "~a" (subseq (aref lines to-line) 0 to-column)))))
-        (format pane "~a~%" (subseq (aref lines to-line) to-column))
-        (loop for i from (1+ to-line) below (length lines)
-              for line = (aref lines i)
-              do (format pane "~a~%" line))))))
+    (let* ((source (source frame))
+           (start (car source))
+           (lines (sicl-source-tracking:lines start))
+           (line-number (sicl-source-tracking:line-index start))
+           (column-number (sicl-source-tracking:character-index start)))
+      (loop for i from 0 below line-number
+            for line = (aref lines i)
+            do (format pane "~a~%" line))
+      (format pane "~a" (subseq (aref lines line-number) 0 column-number))
+      (multiple-value-bind (x y) (clim:stream-cursor-position pane)
+        (clim:draw-rectangle* pane
+                              x y (+ x 5) (+ y 10)
+                              :filled t :ink clim:+red+))
+      (format pane "~a~%" (subseq (aref lines line-number) column-number))
+      (loop for i from (1+ line-number) below (length lines)
+            for line = (aref lines i)
+            do (format pane "~a~%" line)))))
 
 (defclass info ()
   ((%queue :initarg :queue :reader queue)
@@ -73,6 +64,9 @@
   nil)
 
 (defun show (source-position)
+  (check-type source-position
+              (cons sicl-source-tracking:source-position
+                    sicl-source-tracking:source-position))
   (when (boundp '*info*)
     (let* ((expression
              `(lambda ()
