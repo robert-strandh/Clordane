@@ -2,4 +2,5 @@
 
 (defpackage #:clordane
   (:use #:clim-lisp)
-  (:export #:clordane))
+  (:export #:clordane
+           #:potential-breakpoint))

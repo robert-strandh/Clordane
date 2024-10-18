@@ -63,7 +63,7 @@
 (define-clordane-command (com-nop :name t) ()
   nil)
 
-(defun show (source-position)
+(defun potential-breakpoint (source-position)
   (check-type source-position
               (cons sicl-source-tracking:source-position
                     sicl-source-tracking:source-position))
