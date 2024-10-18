@@ -1,3 +1,5 @@
+(cl:in-package #:common-lisp-user)
+
 (defun bla ()
   (flet ((make-source (lines li1 ci1 li2 ci2)
            (cons (make-instance 'sicl-source-tracking:source-position
