@@ -85,6 +85,8 @@
     (setf (source (frame *info*)) source-position)
     (clim:execute-frame-command (frame *info*) '(com-breakpoint))))
 
+;;; This function is called by the application in the application
+;;; thread.
 (defun wait ()
   ;; It is possible that the application is run directly, rather than
   ;; from Clordane.  In that case, we do nothing.
